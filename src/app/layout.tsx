@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, DynaPuff } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,10 +12,22 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const dynaPuff = DynaPuff({
+  variable: "--font-dyna-puff",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "LinkLite.in",
   description:
     "Create, share, and manage your links in a distraction-free environment.",
+  openGraph: {
+    type: "website",
+    title: "LinkLite.in",
+    description:
+      "Create, share, and manage your links in a distraction-free environment.",
+    url: "https://linklite.in",
+  },
 };
 
 export default function RootLayout({
@@ -26,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        className={`${geistSans.variable} ${geistMono.variable} ${dynaPuff.variable} antialiased`}>
         {children}
       </body>
     </html>

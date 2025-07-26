@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import HeroTitle from "@/components/ui/hero-title";
 import { Input } from "@/components/ui/input";
+import Login from "@/components/ui/login";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import React from "react";
 
@@ -9,12 +10,27 @@ const HomePage = () => {
     <div className="bg-black h-screen w-screen">
       <div className="px-4 pb-2 flex flex-col max-w-[1440px] w-full h-full mx-auto">
         <header className="py-5 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-neutral-100">LinkLite.in</h1>
+          <h1 className="text-xl font-bold text-neutral-100 flex items-center gap-1">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-link-icon lucide-link">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+            </svg>
+            <span className="font-dyna-puff">LinkLite</span>
+          </h1>
 
           <div className="flex items-center gap-4">
-            <Button variant="link" className="text-neutral-100 cursor-pointer">
-              Login
-            </Button>
+            <Login />
+
             <Button className="cursor-pointer bg-neutral-100 hover:bg-neutral-200 text-black">
               Sign Up
             </Button>
@@ -50,9 +66,9 @@ const HomePage = () => {
                 <p className="text-neutral-500">No credit card required.</p>
               </div>
 
-              <form className="space-y-4">
-                <div>
-                  <label htmlFor="url" className="font-bold mb-2">
+              <form className="flex flex-col items-start gap-4">
+                <div className="space-y-2 w-full">
+                  <label htmlFor="url" className="font-bold">
                     Paste your long URL here
                   </label>
                   <Input
