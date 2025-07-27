@@ -1,35 +1,30 @@
 import { Button } from "@/components/ui/button";
 import HeroTitle from "@/components/ui/hero-title";
 import { Input } from "@/components/ui/input";
-import Login from "@/components/ui/login";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import { colors } from "@/lib/constants";
+import { ArrowRight, CheckCircle2, LinkIcon, Triangle } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 const HomePage = () => {
   return (
-    <div className="bg-black h-screen w-screen">
+    <div className="bg-[#010001] h-screen w-screen">
       <div className="px-4 pb-2 flex flex-col max-w-[1440px] w-full h-full mx-auto">
         <header className="py-5 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-neutral-100 flex items-center gap-1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-link-icon lucide-link">
-              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-            </svg>
+          <h1 className="text-xl text-neutral-100 flex items-center gap-1">
+            <LinkIcon className="size-6" color={colors["s-secondary"]} />
             <span className="font-dyna-puff">LinkLite</span>
           </h1>
 
           <div className="flex items-center gap-4">
-            <Login />
+            <Link href="/login">
+              <Button
+                variant="link"
+                className="text-neutral-100 cursor-pointer">
+                Login
+              </Button>
+            </Link>
 
             <Button className="cursor-pointer bg-neutral-100 hover:bg-neutral-200 text-black">
               Sign Up
@@ -37,22 +32,10 @@ const HomePage = () => {
           </div>
         </header>
 
-        <div className="relative flex-1 bg-black rounded-3xl p-3 md:p-10 overflow-hidden">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="400"
-            height="400"
-            viewBox="0 0 24 24"
-            fill="black"
-            stroke="black"
-            strokeWidth="0"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="lucide lucide-triangle-icon lucide-triangle fill-neutral-500 blur-2xl absolute -top-40 -right-36 rotate-45">
-            <path d="M13.73 4a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
-          </svg>
+        <main className="relative flex-1 bg-[#010001] rounded-3xl p-3 md:p-10 overflow-hidden">
+          <Triangle className="size-96 fill-neutral-600 blur-2xl absolute -top-40 -right-36 rotate-45" />
 
-          <div className="relative z-10 h-full flex flex-col justify-center items-center space-y-5">
+          <section className="relative z-10 h-full flex flex-col justify-center items-center space-y-5">
             <HeroTitle />
 
             <p className="text-xl sm:text-2xl font-medium text-neutral-300 text-center">
@@ -67,10 +50,10 @@ const HomePage = () => {
               </div>
 
               <form className="flex flex-col items-start gap-4">
-                <div className="space-y-2 w-full">
-                  <label htmlFor="url" className="font-bold">
+                <div className="flex flex-col space-y-1 w-full">
+                  <Label htmlFor="url" className="font-bold text-base">
                     Paste your long URL here
-                  </label>
+                  </Label>
                   <Input
                     placeholder="https://example.com/my-long-url"
                     id="url"
@@ -90,31 +73,19 @@ const HomePage = () => {
               </h5>
               <ul className="text-neutral-300 flex items-center justify-center gap-4 sm:gap-8">
                 <li className="flex items-center gap-2 text-sm sm:text-base">
-                  <CheckCircle2 />
+                  <CheckCircle2 color={colors["s-secondary"]} />
                   <span>5 short links/month</span>
                 </li>
                 <li className="flex items-center gap-2 text-sm sm:text-base">
-                  <CheckCircle2 />
+                  <CheckCircle2 color={colors["s-secondary"]} />
                   <span>Unlimited link clicks</span>
                 </li>
               </ul>
             </div>
-          </div>
+          </section>
 
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="350"
-            height="350"
-            viewBox="0 0 24 24"
-            fill="black"
-            stroke="black"
-            strokeWidth="0"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="lucide lucide-triangle-icon lucide-triangle fill-neutral-500 blur-2xl absolute -bottom-20 -left-30 rotate-135">
-            <path d="M13.73 4a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
-          </svg>
-        </div>
+          <Triangle className="size-96 fill-neutral-600 blur-2xl absolute -bottom-20 -left-30 rotate-135" />
+        </main>
       </div>
     </div>
   );
