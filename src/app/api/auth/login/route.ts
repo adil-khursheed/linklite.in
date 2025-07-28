@@ -11,7 +11,10 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const res = await axiosInstance.post("/users/login", { email, password });
+    const res = await axiosInstance.post("/api/v1/users/login", {
+      email,
+      password,
+    });
 
     const { accessToken, refreshToken, user, message, success } = res.data;
 

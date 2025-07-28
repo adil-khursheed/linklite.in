@@ -9,13 +9,15 @@ import React from "react";
 
 const HomePage = () => {
   return (
-    <div className="bg-[#010001] h-screen w-screen">
+    <div className="bg-p-primary h-screen w-screen">
       <div className="px-4 pb-2 flex flex-col max-w-[1440px] w-full h-full mx-auto">
         <header className="py-5 flex items-center justify-between">
-          <h1 className="text-xl text-neutral-100 flex items-center gap-1">
+          <Link
+            href="/"
+            className="text-xl text-neutral-100 flex items-center gap-1">
             <LinkIcon className="size-6" color={colors["s-secondary"]} />
             <span className="font-dyna-puff">LinkLite</span>
-          </h1>
+          </Link>
 
           <div className="flex items-center gap-4">
             <Link href="/login">
@@ -26,13 +28,15 @@ const HomePage = () => {
               </Button>
             </Link>
 
-            <Button className="cursor-pointer bg-neutral-100 hover:bg-neutral-200 text-black">
-              Sign Up
-            </Button>
+            <Link href="/signup">
+              <Button className="cursor-pointer bg-p-primary-light hover:bg-p-primary-light/90 text-black">
+                Sign Up
+              </Button>
+            </Link>
           </div>
         </header>
 
-        <main className="relative flex-1 bg-[#010001] rounded-3xl p-3 md:p-10 overflow-hidden">
+        <main className="relative flex-1 bg-p-primary rounded-3xl p-3 md:p-10 overflow-hidden">
           <Triangle className="size-96 fill-neutral-600 blur-2xl absolute -top-40 -right-36 rotate-45" />
 
           <section className="relative z-10 h-full flex flex-col justify-center items-center space-y-5">
@@ -43,7 +47,7 @@ const HomePage = () => {
               environment.
             </p>
 
-            <div className="bg-neutral-100 rounded-2xl p-5 max-w-3xl w-full mt-4">
+            <div className="bg-p-primary-light rounded-2xl p-5 max-w-3xl w-full mt-4">
               <div className="mb-4 space-y-1">
                 <h4 className="text-2xl font-bold">Shorten Long Link</h4>
                 <p className="text-neutral-500">No credit card required.</p>

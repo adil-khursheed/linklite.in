@@ -41,9 +41,12 @@ axiosInstance.interceptors.response.use(
 
       if (refreshToken) {
         try {
-          const res = await axiosInstance.post("/users/refresh", {
-            _linklite_refresh: refreshToken,
-          });
+          const res = await axiosInstance.post(
+            "/api/v1/users/refresh-access-token",
+            {
+              _linklite_refresh: refreshToken,
+            }
+          );
 
           const { accessToken, refreshToken: newRefreshToken } = res.data;
 

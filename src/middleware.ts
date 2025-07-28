@@ -1,18 +1,73 @@
 import { NextRequest, NextResponse } from "next/server";
+import axiosInstance from "./axios/axios";
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  const isPublicPath = ["/", "/login", "/register"].includes(pathname);
+  const isPublicPath = [
+    "/",
+    "/login",
+    "/signup",
+    "/api/auth/login",
+    "/api/auth/signup",
+  ].includes(pathname);
 
-  const token = req.cookies.get("_linklite_access")?.value;
-  console.log(token);
+  const access_token = req.cookies.get("_linklite_access")?.value;
+  const refresh_token = req.cookies.get("_linklite_refresh")?.value;
 
-  if (!token && !isPublicPath) {
-    return NextResponse.redirect(new URL("/", req.url));
+  let response = NextResponse.next();
+
+  if (!access_token && refresh_token) {
+    try {
+      const res = await axiosInstance.post(
+        "/api/v1/users/refresh-access-token",
+        {
+          _linklite_refresh: refresh_token,
+        }
+      );
+
+      const { accessToken, refreshToken } = res.data;
+
+      // Update access token
+      response.cookies.set("_linklite_access", accessToken, {
+        httpOnly: true,
+        sameSite: "strict",
+        secure: true,
+        expires: new Date(Date.now() + 1000 * 60 * 60),
+      });
+
+      // Update refresh token
+      response.cookies.set("_linklite_refresh", refreshToken, {
+        httpOnly: true,
+        sameSite: "strict",
+        secure: true,
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+      });
+
+      return response;
+    } catch (error) {
+      console.log(error);
+      if (!isPublicPath) {
+        return NextResponse.redirect(new URL("/login", req.url));
+      }
+    }
   }
 
-  return NextResponse.next();
+  // Check again if access token is missing after attempted refresh
+  const hasAccessToken =
+    access_token || response.cookies.get("_linklite_access")?.value;
+
+  // ❌ If no access token and trying to access protected route → redirect
+  if (!hasAccessToken && !isPublicPath) {
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
+
+  // ✅ If access token and trying to access public route → redirect
+  if (hasAccessToken && isPublicPath) {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
+
+  return response;
 }
 
 export const config = {

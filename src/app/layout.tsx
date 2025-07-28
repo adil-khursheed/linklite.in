@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, Inter_Tight, DynaPuff } from "next/font/google";
+import { Inter, DynaPuff } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const interSans = Inter({
@@ -35,6 +36,7 @@ export default function RootLayout({
       <body
         className={`${interSans.variable} ${dynaPuff.variable} antialiased`}>
         {children}
+        <Toaster richColors position="top-center" duration={5000} />
       </body>
     </html>
   );

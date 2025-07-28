@@ -1,11 +1,20 @@
+import type { Metadata } from "next";
+
 import React from "react";
+
 import Image from "next/image";
 import Link from "next/link";
-import { LinkIcon } from "lucide-react";
 
+import { LinkIcon } from "lucide-react";
 import { colors } from "@/lib/constants";
 
 import Auth_Form from "../_components/Auth_Form";
+
+export const metaData: Metadata = {
+  title: "Sign Up to LinkLite.in",
+  description: "Sign Up to LinkLite.in",
+  keywords: ["LinkLite", "LinkLite.in", "LinkLite.in Sign Up"],
+};
 
 const Page = () => {
   return (
@@ -18,32 +27,30 @@ const Page = () => {
 
         <div className="flex-1 flex flex-col justify-center space-y-4 max-w-md w-full h-full mx-auto">
           <div className="flex flex-col gap-2 mb-5">
-            <h2 className="text-3xl font-bold">Welcome back</h2>
-            <p className="text-lg">
-              Enter your credentials to login to your account.
-            </p>
+            <h2 className="text-3xl font-bold">Create your account</h2>
+
             <p className="text-sm text-neutral-500">
-              Don't have an account?{" "}
-              <Link href="/signup" className="text-s-secondary underline">
-                Sign Up
+              Already have an account?{" "}
+              <Link href="/login" className="text-s-secondary underline">
+                Login
               </Link>
             </p>
           </div>
 
-          <Auth_Form />
+          <Auth_Form isSignUp={true} />
         </div>
       </div>
 
       <div className="flex-1 hidden lg:flex flex-col items-center justify-center bg-p-primary-light rounded-s-4xl px-4">
         <Image
-          src={"/sign_in.png"}
-          alt="Login to LinkLite.in"
+          src={"/sign_up.png"}
+          alt="Sign Up at LinkLite.in"
           width={400}
           height={400}
         />
 
         <p className="text-center text-lg font-semibold">
-          Connect LinkLite to your daily online presence.
+          Streamline your online presence, amplify your productivity.
         </p>
       </div>
     </div>
