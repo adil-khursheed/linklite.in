@@ -36,7 +36,7 @@ export default function RootLayout({
       <body
         className={`${interSans.variable} ${dynaPuff.variable} antialiased`}>
         {children}
-        <Toaster richColors position="top-center" duration={5000} />
+        <Toaster richColors position="top-center" duration={3000} />
       </body>
     </html>
   );
