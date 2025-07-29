@@ -1,8 +1,8 @@
 import axiosInstance from "@/axios/axios";
 import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function POST(req: NextRequest) {
+export async function POST() {
   try {
     const res = await axiosInstance.post("/api/v1/users/logout");
 

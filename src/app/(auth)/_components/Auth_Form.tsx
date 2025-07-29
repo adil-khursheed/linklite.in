@@ -18,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
+import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 
 const LoginSchema = z.object({
   email: z.email({ error: "Invalid email address" }),
@@ -27,6 +27,8 @@ const LoginSchema = z.object({
 
 const Login_Form = ({ isSignUp = false }: { isSignUp?: boolean }) => {
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const router = useRouter();
 
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -40,24 +42,35 @@ const Login_Form = ({ isSignUp = false }: { isSignUp?: boolean }) => {
   const handleSubmit = async (data: z.infer<typeof LoginSchema>) => {
     try {
       setLoading(true);
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      let res: Response;
+      if (isSignUp) {
+        res = await fetch("/api/auth/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+      } else {
+        res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+      }
 
       const { success } = await res.json();
 
       if (success) {
         router.replace("/dashboard");
-        toast.success("Login successful");
+        toast.success(`${isSignUp ? "Signup" : "Login"} successful`);
       }
     } catch (error) {
       console.log(error);
 
-      toast.error("Login failed");
+      toast.error(`${isSignUp ? "Signup" : "Login"} failed`);
     } finally {
       setLoading(false);
     }
@@ -90,7 +103,21 @@ const Login_Form = ({ isSignUp = false }: { isSignUp?: boolean }) => {
               <FormItem>
                 <FormLabel htmlFor="password">Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="Password" className="h-12" {...field} />
+                  <div className="flex items-center gap-2 h-12 border border-input rounded-md">
+                    <Input
+                      placeholder="Password"
+                      type={showPassword ? "text" : "password"}
+                      className="h-full border-0 focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none"
+                      {...field}
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      className="h-full cursor-pointer"
+                      onClick={() => setShowPassword(!showPassword)}>
+                      {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                    </Button>
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
