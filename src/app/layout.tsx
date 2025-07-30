@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, DynaPuff } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { _config } from "@/lib/_config";
 import "./globals.css";
 
 const interSans = Inter({
@@ -32,12 +34,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${interSans.variable} ${dynaPuff.variable} antialiased`}>
-        {children}
-        <Toaster richColors position="top-center" duration={3000} />
-      </body>
-    </html>
+    <GoogleOAuthProvider clientId={_config.google_client_id!}>
+      <html lang="en">
+        <body
+          className={`${interSans.variable} ${dynaPuff.variable} antialiased`}>
+          {children}
+          <Toaster richColors position="top-center" duration={3000} />
+        </body>
+      </html>
+    </GoogleOAuthProvider>
   );
 }

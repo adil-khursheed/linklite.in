@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2Icon, LogOutIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { googleLogout } from "@react-oauth/google";
 
 const LogoutButton = () => {
   const [loading, setLoading] = React.useState(false);
@@ -21,6 +22,7 @@ const LogoutButton = () => {
       const { success } = await res.json();
 
       if (success) {
+        googleLogout();
         toast.success("Logout successful");
         router.replace("/");
       }

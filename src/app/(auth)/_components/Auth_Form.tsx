@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
+import GoogleSignIn from "./GoogleSignIn";
 
 const LoginSchema = z.object({
   email: z.email({ error: "Invalid email address" }),
@@ -42,7 +43,9 @@ const Login_Form = ({ isSignUp = false }: { isSignUp?: boolean }) => {
   const handleSubmit = async (data: z.infer<typeof LoginSchema>) => {
     try {
       setLoading(true);
+
       let res: Response;
+
       if (isSignUp) {
         res = await fetch("/api/auth/signup", {
           method: "POST",
@@ -78,6 +81,12 @@ const Login_Form = ({ isSignUp = false }: { isSignUp?: boolean }) => {
 
   return (
     <>
+      <GoogleSignIn />
+
+      <div className="before:bg-border after:bg-border flex items-center gap-3 before:h-px before:flex-1 after:h-px after:flex-1">
+        <span className="text-muted-foreground text-xs">OR</span>
+      </div>
+
       <Form {...form}>
         <form
           className="flex flex-col space-y-3 w-full"
@@ -150,14 +159,6 @@ const Login_Form = ({ isSignUp = false }: { isSignUp?: boolean }) => {
           </Button>
         </form>
       </Form>
-
-      <div className="before:bg-border after:bg-border flex items-center gap-3 before:h-px before:flex-1 after:h-px after:flex-1">
-        <span className="text-muted-foreground text-xs">Or</span>
-      </div>
-
-      <Button variant="outline" className="cursor-pointer w-full h-12">
-        Login with Google
-      </Button>
     </>
   );
 };

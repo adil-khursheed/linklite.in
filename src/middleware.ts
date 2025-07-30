@@ -10,6 +10,7 @@ export async function middleware(req: NextRequest) {
     "/signup",
     "/api/auth/login",
     "/api/auth/signup",
+    "/api/auth/google",
   ].includes(pathname);
 
   const access_token = req.cookies.get("_linklite_access")?.value;
