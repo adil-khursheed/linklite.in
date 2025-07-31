@@ -1,11 +1,6 @@
 import React from "react";
 
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarSeparator,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
+import { Sidebar, SidebarContent } from "@/components/ui/sidebar";
 
 import AppSidebarMenu from "./AppSidebarMenu";
 import AppSidebarHeader from "./AppSidebarHeader";

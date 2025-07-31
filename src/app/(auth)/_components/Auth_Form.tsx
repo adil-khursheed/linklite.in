@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 import GoogleSignIn from "./GoogleSignIn";
+import Link from "next/link";
 
 const LoginSchema = z.object({
   email: z.email({ error: "Invalid email address" }),
@@ -135,9 +136,13 @@ const Login_Form = ({ isSignUp = false }: { isSignUp?: boolean }) => {
 
           {!isSignUp && (
             <div className="flex justify-end">
-              <Button variant="link" className="underline px-0">
-                Forgot Password?
-              </Button>
+              <Link href="/forgot-password">
+                <Button
+                  variant="link"
+                  className="underline px-0 cursor-pointer">
+                  Forgot Password?
+                </Button>
+              </Link>
             </div>
           )}
 

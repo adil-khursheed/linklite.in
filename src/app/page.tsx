@@ -2,8 +2,9 @@ import { Button } from "@/components/ui/button";
 import HeroTitle from "@/components/ui/hero-title";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Logo from "@/components/ui/logo";
 import { colors } from "@/lib/constants";
-import { ArrowRight, CheckCircle2, LinkIcon, Triangle } from "lucide-react";
+import { ArrowRight, CheckCircle2, Triangle } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -12,24 +13,19 @@ const HomePage = () => {
     <div className="bg-p-primary h-screen w-screen">
       <div className="px-4 pb-2 flex flex-col max-w-[1440px] w-full h-full mx-auto">
         <header className="py-5 flex items-center justify-between">
-          <Link
-            href="/"
-            className="text-xl text-neutral-100 flex items-center gap-1">
-            <LinkIcon className="size-6" color={colors["s-secondary"]} />
-            <span className="font-dyna-puff">LinkLite</span>
-          </Link>
+          <Logo />
 
           <div className="flex items-center gap-4">
             <Link href="/login">
               <Button
                 variant="link"
-                className="text-neutral-100 cursor-pointer">
+                className="text-white hover:text-p-primary-light cursor-pointer">
                 Login
               </Button>
             </Link>
 
             <Link href="/signup">
-              <Button className="cursor-pointer bg-p-primary-light hover:bg-p-primary-light/90 text-black">
+              <Button className="cursor-pointer bg-white hover:bg-p-primary-light text-black">
                 Sign Up
               </Button>
             </Link>
@@ -37,7 +33,7 @@ const HomePage = () => {
         </header>
 
         <main className="relative flex-1 bg-p-primary rounded-3xl p-3 md:p-10 overflow-hidden">
-          <Triangle className="size-96 fill-neutral-600 blur-2xl absolute -top-40 -right-36 rotate-45" />
+          <Triangle className="size-96 fill-p-primary-light/30 blur-2xl absolute -top-40 -right-36 rotate-45" />
 
           <section className="relative z-10 h-full flex flex-col justify-center items-center space-y-5">
             <HeroTitle />
@@ -47,7 +43,7 @@ const HomePage = () => {
               environment.
             </p>
 
-            <div className="bg-p-primary-light rounded-2xl p-5 max-w-3xl w-full mt-4">
+            <div className="bg-white rounded-2xl p-5 max-w-3xl w-full mt-4">
               <div className="mb-4 space-y-1">
                 <h4 className="text-2xl font-bold">Shorten Long Link</h4>
                 <p className="text-neutral-500">No credit card required.</p>
@@ -88,7 +84,7 @@ const HomePage = () => {
             </div>
           </section>
 
-          <Triangle className="size-96 fill-neutral-600 blur-2xl absolute -bottom-20 -left-30 rotate-135" />
+          <Triangle className="size-96 fill-p-primary-light/30 blur-2xl absolute -bottom-20 -left-30 rotate-135" />
         </main>
       </div>
     </div>

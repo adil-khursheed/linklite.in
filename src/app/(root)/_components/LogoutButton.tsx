@@ -27,6 +27,7 @@ const LogoutButton = () => {
         router.replace("/");
       }
     } catch (error) {
+      console.log(error);
       toast.error("Logout failed");
     } finally {
       setLoading(false);

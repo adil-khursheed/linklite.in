@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 
 const HeroTitle = () => {
   return (
-    <h2 className="text-4xl sm:text-5xl font-bold text-neutral-100 text-center">
+    <h2 className="text-4xl sm:text-5xl font-bold text-neutral-100 text-center leading-12 sm:leading-16">
       {"Simplify your online life, one link at a time."
         .split(" ")
         .map((word, index) => (

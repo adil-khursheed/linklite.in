@@ -4,19 +4,21 @@ import axiosInstance from "./axios/axios";
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  const isPublicPath = [
-    "/",
-    "/login",
-    "/signup",
-    "/api/auth/login",
-    "/api/auth/signup",
-    "/api/auth/google",
-  ].includes(pathname);
+  const isPublicPath =
+    [
+      "/",
+      "/login",
+      "/signup",
+      "/forgot-password",
+      "/api/auth/login",
+      "/api/auth/signup",
+      "/api/auth/google",
+    ].includes(pathname) || pathname.startsWith("/reset-password/");
 
   const access_token = req.cookies.get("_linklite_access")?.value;
   const refresh_token = req.cookies.get("_linklite_refresh")?.value;
 
-  let response = NextResponse.next();
+  const response = NextResponse.next();
 
   if (!access_token && refresh_token) {
     try {
@@ -77,5 +79,6 @@ export const config = {
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
     // Always run for API routes
     "/(api|trpc)(.*)",
+    "/reset-password/:path*",
   ],
 };

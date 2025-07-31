@@ -1,29 +1,16 @@
-import type { Metadata } from "next";
-
 import React from "react";
 
 import Image from "next/image";
 import Link from "next/link";
 
-import { LinkIcon } from "lucide-react";
-import { colors } from "@/lib/constants";
-
 import Auth_Form from "../_components/Auth_Form";
-
-export const metaData: Metadata = {
-  title: "Sign Up to LinkLite.in",
-  description: "Sign Up to LinkLite.in",
-  keywords: ["LinkLite", "LinkLite.in", "LinkLite.in Sign Up"],
-};
+import Logo from "@/components/ui/logo";
 
 const Page = () => {
   return (
     <div className="h-screen w-screen flex">
       <div className="flex-1/5 flex flex-col px-5">
-        <Link href="/" className="flex items-center gap-1 py-5">
-          <LinkIcon className="size-6" color={colors["s-secondary"]} />
-          <span className="font-dyna-puff text-xl">LinkLite</span>
-        </Link>
+        <Logo className="py-5" />
 
         <div className="flex-1 flex flex-col justify-center space-y-4 max-w-md w-full h-full mx-auto">
           <div className="flex flex-col gap-2 mb-5">
