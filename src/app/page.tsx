@@ -1,12 +1,12 @@
+import React from "react";
+import Link from "next/link";
+
+import { CheckCircle2, Triangle } from "lucide-react";
+import { colors } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import HeroTitle from "@/components/ui/hero-title";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import Logo from "@/components/ui/logo";
-import { colors } from "@/lib/constants";
-import { ArrowRight, CheckCircle2, Triangle } from "lucide-react";
-import Link from "next/link";
-import React from "react";
+import HomeUrlForm from "./_components/HomeUrlForm";
 
 const HomePage = () => {
   return (
@@ -49,22 +49,7 @@ const HomePage = () => {
                 <p className="text-neutral-500">No credit card required.</p>
               </div>
 
-              <form className="flex flex-col items-start gap-4">
-                <div className="flex flex-col space-y-1 w-full">
-                  <Label htmlFor="url" className="font-bold text-base">
-                    Paste your long URL here
-                  </Label>
-                  <Input
-                    placeholder="https://example.com/my-long-url"
-                    id="url"
-                    name="url"
-                    className="h-14 rounded-xl sm:text-lg"
-                  />
-                </div>
-                <Button className="rounded-xl h-12">
-                  Get your free link here <ArrowRight />
-                </Button>
-              </form>
+              <HomeUrlForm />
             </div>
 
             <div className="mt-4 space-y-3">

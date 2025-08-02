@@ -5,7 +5,7 @@ import { Loader2Icon } from "lucide-react";
 import { useGoogleLogin } from "@react-oauth/google";
 import { Button } from "@/components/ui/button";
 
-const GoogleSignIn = () => {
+const GoogleSignIn = ({ url }: { url: string | null }) => {
   const [loading, setLoading] = React.useState(false);
   const router = useRouter();
 
@@ -24,7 +24,11 @@ const GoogleSignIn = () => {
         const { success } = await res.json();
 
         if (success) {
-          router.replace("/dashboard");
+          if (url) {
+            router.replace(`/dashboard?url=${encodeURIComponent(url)}`);
+          } else {
+            router.replace("/dashboard");
+          }
           toast.success("Login successful");
         }
       } catch (error) {

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -30,6 +30,9 @@ const LoginSchema = z.object({
 const Login_Form = ({ isSignUp = false }: { isSignUp?: boolean }) => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const searchParams = useSearchParams();
+  const url = searchParams.get("url");
 
   const router = useRouter();
 
@@ -68,7 +71,11 @@ const Login_Form = ({ isSignUp = false }: { isSignUp?: boolean }) => {
       const { success } = await res.json();
 
       if (success) {
-        router.replace("/dashboard");
+        if (url) {
+          router.replace(`/dashboard?url=${encodeURIComponent(url)}`);
+        } else {
+          router.replace("/dashboard");
+        }
         toast.success(`${isSignUp ? "Signup" : "Login"} successful`);
       }
     } catch (error) {
@@ -82,7 +89,7 @@ const Login_Form = ({ isSignUp = false }: { isSignUp?: boolean }) => {
 
   return (
     <>
-      <GoogleSignIn />
+      <GoogleSignIn url={url} />
 
       <div className="before:bg-border after:bg-border flex items-center gap-3 before:h-px before:flex-1 after:h-px after:flex-1">
         <span className="text-muted-foreground text-xs">OR</span>
