@@ -47,10 +47,6 @@ export async function middleware(req: NextRequest) {
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
       });
 
-      if (isPublicPath) {
-        return NextResponse.redirect(new URL("/dashboard", req.url));
-      }
-
       return response;
     } catch (error) {
       console.log(error);

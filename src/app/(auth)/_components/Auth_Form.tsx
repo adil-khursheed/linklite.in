@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils";
 import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 import GoogleSignIn from "./GoogleSignIn";
 import Link from "next/link";
+import { useAuthStore } from "@/store/auth";
 
 const LoginSchema = z.object({
   email: z.email({ error: "Invalid email address" }),
@@ -30,6 +31,8 @@ const LoginSchema = z.object({
 const Login_Form = ({ isSignUp = false }: { isSignUp?: boolean }) => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const { setUser } = useAuthStore();
 
   const searchParams = useSearchParams();
   const url = searchParams.get("url");
@@ -68,14 +71,17 @@ const Login_Form = ({ isSignUp = false }: { isSignUp?: boolean }) => {
         });
       }
 
-      const { success } = await res.json();
+      const { success, user } = await res.json();
 
       if (success) {
+        setUser(user);
+
         if (url) {
           router.replace(`/dashboard?url=${encodeURIComponent(url)}`);
         } else {
           router.replace("/dashboard");
         }
+
         toast.success(`${isSignUp ? "Signup" : "Login"} successful`);
       }
     } catch (error) {

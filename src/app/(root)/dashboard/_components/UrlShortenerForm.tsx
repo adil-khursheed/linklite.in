@@ -11,9 +11,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import * as z from "zod";
+import { shortenLink } from "../_actions/shortenLink";
+import ShortLinkDialog from "./ShortLinkDialog";
+import { Loader2Icon } from "lucide-react";
 
 const UrlShortenerFormSchema = z.object({
   originalUrl: z
@@ -24,6 +28,9 @@ const UrlShortenerFormSchema = z.object({
 });
 
 const UrlShortenerForm = () => {
+  const [shortLinkData, setShortLinkData] = useState<TShortLink | null>(null);
+  const [loading, setLoading] = useState(false);
+
   const form = useForm<z.infer<typeof UrlShortenerFormSchema>>({
     resolver: zodResolver(UrlShortenerFormSchema),
     defaultValues: {
@@ -31,8 +38,20 @@ const UrlShortenerForm = () => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof UrlShortenerFormSchema>) => {
-    console.log(data);
+  const onSubmit = async (data: z.infer<typeof UrlShortenerFormSchema>) => {
+    try {
+      setShortLinkData(null);
+      setLoading(true);
+      const res = await shortenLink(data.originalUrl);
+      setShortLinkData(res.url);
+      form.reset();
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Failed to create short link"
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -62,11 +81,20 @@ const UrlShortenerForm = () => {
             )}
           />
 
-          <Button type="submit" className="h-12 w-full sm:w-auto">
-            Create your Lite Link
+          <Button
+            type="submit"
+            disabled={loading}
+            className="h-12 w-full sm:w-1/5 cursor-pointer">
+            {loading ? (
+              <Loader2Icon className="size-5 animate-spin" />
+            ) : (
+              "Create your Lite Link"
+            )}
           </Button>
         </div>
       </form>
+
+      {shortLinkData && <ShortLinkDialog data={shortLinkData} openOnMount />}
     </Form>
   );
 };

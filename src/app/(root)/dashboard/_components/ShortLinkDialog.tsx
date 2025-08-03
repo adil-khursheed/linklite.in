@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -19,6 +19,7 @@ import Facebook from "@/components/ui/facebook";
 import Twitter from "@/components/ui/twitter";
 import LinkedIn from "@/components/ui/linkedIn";
 import Telegram from "@/components/ui/telegram";
+import { useAuthStore } from "@/store/auth";
 
 const socialShare = [
   {
@@ -66,9 +67,17 @@ const socialShare = [
   },
 ];
 
-const ShortLinkDialog = ({ data }: { data: TShortLink }) => {
-  const [open, setOpen] = useState(true);
+const ShortLinkDialog = ({
+  data,
+  openOnMount = false,
+}: {
+  data: TShortLink;
+  openOnMount?: boolean;
+}) => {
+  const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+
+  const { decrementShortLinkLimit } = useAuthStore();
 
   const searchParams = useSearchParams();
 
@@ -95,6 +104,13 @@ const ShortLinkDialog = ({ data }: { data: TShortLink }) => {
       );
     }
   };
+
+  useEffect(() => {
+    if (openOnMount) {
+      setOpen(true);
+      decrementShortLinkLimit();
+    }
+  }, [openOnMount]);
 
   return (
     <>

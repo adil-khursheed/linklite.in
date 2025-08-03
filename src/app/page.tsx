@@ -33,12 +33,12 @@ const HomePage = () => {
         </header>
 
         <main className="relative flex-1 bg-p-primary rounded-3xl p-3 md:p-10 overflow-hidden">
-          <Triangle className="size-96 fill-p-primary-light/30 blur-2xl absolute -top-40 -right-36 rotate-45" />
+          <Triangle className="size-96 fill-p-primary-light/15 blur-3xl absolute -top-40 -right-36 rotate-45" />
 
           <section className="relative z-10 h-full flex flex-col justify-center items-center space-y-5">
             <HeroTitle />
 
-            <p className="text-xl sm:text-2xl font-medium text-neutral-300 text-center">
+            <p className="max-w-2xl text-lg sm:text-xl font-medium text-neutral-300 text-center">
               Create, share, and manage your links in a distraction-free
               environment.
             </p>
@@ -59,8 +59,9 @@ const HomePage = () => {
               <ul className="text-neutral-300 flex items-center justify-center gap-4 sm:gap-8">
                 <li className="flex items-center gap-2 text-sm sm:text-base">
                   <CheckCircle2 color={colors["s-secondary"]} />
-                  <span>5 short links/month</span>
+                  <span>100 short links/month</span>
                 </li>
+
                 <li className="flex items-center gap-2 text-sm sm:text-base">
                   <CheckCircle2 color={colors["s-secondary"]} />
                   <span>Unlimited link clicks</span>
@@ -69,7 +70,7 @@ const HomePage = () => {
             </div>
           </section>
 
-          <Triangle className="size-96 fill-p-primary-light/30 blur-2xl absolute -bottom-20 -left-30 rotate-135" />
+          <Triangle className="size-96 fill-p-primary-light/15 blur-3xl absolute -bottom-20 -left-30 rotate-135" />
         </main>
       </div>
     </div>

@@ -4,9 +4,13 @@ import { toast } from "sonner";
 import { Loader2Icon } from "lucide-react";
 import { useGoogleLogin } from "@react-oauth/google";
 import { Button } from "@/components/ui/button";
+import { useAuthStore } from "@/store/auth";
 
 const GoogleSignIn = ({ url }: { url: string | null }) => {
   const [loading, setLoading] = React.useState(false);
+
+  const { setUser } = useAuthStore();
+
   const router = useRouter();
 
   const googleLogin = useGoogleLogin({
@@ -21,14 +25,17 @@ const GoogleSignIn = ({ url }: { url: string | null }) => {
           body: JSON.stringify({ access_token: response.access_token }),
         });
 
-        const { success } = await res.json();
+        const { success, user } = await res.json();
 
         if (success) {
+          setUser(user);
+
           if (url) {
             router.replace(`/dashboard?url=${encodeURIComponent(url)}`);
           } else {
             router.replace("/dashboard");
           }
+
           toast.success("Login successful");
         }
       } catch (error) {

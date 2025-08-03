@@ -1,16 +1,11 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React from "react";
 import UrlShortenerForm from "./_components/UrlShortenerForm";
 
 import { _config } from "@/lib/_config";
 import { shortenLink } from "./_actions/shortenLink";
-import ShortLinkDialog from "./_components/ShortLinkDialog";
+import Description from "./_components/Description";
+import DialogWrapper from "./_components/DialogWrapper";
 
 const Page = async ({
   searchParams,
@@ -28,7 +23,7 @@ const Page = async ({
   }
 
   return (
-    <section className="px-3 py-5 sm:p-5 max-w-5xl w-full mx-auto">
+    <section className="px-3 py-5 sm:p-5 max-w-4xl w-full mx-auto">
       <h2 className="text-xl sm:text-3xl font-bold">
         Bridge For Your Connections
       </h2>
@@ -36,9 +31,9 @@ const Page = async ({
       <Card className="mt-8 bg-p-primary-light border-p-primary-light">
         <CardHeader>
           <CardTitle className="text-p-primary text-xl sm:text-2xl">
-            Shorten Long Link
+            Lighten your long link
           </CardTitle>
-          <CardDescription>No credit card required.</CardDescription>
+          <Description />
         </CardHeader>
 
         <CardContent>
@@ -46,7 +41,7 @@ const Page = async ({
         </CardContent>
       </Card>
 
-      {urlData && <ShortLinkDialog data={urlData} />}
+      {urlData && <DialogWrapper data={urlData} />}
     </section>
   );
 };

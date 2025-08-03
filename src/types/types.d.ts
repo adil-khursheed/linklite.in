@@ -1,3 +1,13 @@
+type UserInfo = {
+  _id: string;
+  display_name: string;
+  account_name: string;
+  email: string;
+  email_verified: boolean;
+  category: string;
+  short_links_limit: number;
+};
+
 type TShortLink = {
   _id: string;
   user_id: string;

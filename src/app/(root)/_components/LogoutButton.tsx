@@ -6,13 +6,16 @@ import { Loader2Icon, LogOutIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { googleLogout } from "@react-oauth/google";
+import { useAuthStore } from "@/store/auth";
 
 const LogoutButton = () => {
   const [loading, setLoading] = React.useState(false);
 
+  const { logout } = useAuthStore();
+
   const router = useRouter();
 
-  const logout = async () => {
+  const handleLogout = async () => {
     try {
       setLoading(true);
       const res = await fetch("/api/auth/logout", {
@@ -23,7 +26,7 @@ const LogoutButton = () => {
 
       if (success) {
         googleLogout();
-        toast.success("Logout successful");
+        logout();
         router.replace("/");
       }
     } catch (error) {
@@ -37,7 +40,7 @@ const LogoutButton = () => {
     <Button
       variant={"link"}
       className="cursor-pointer hover:no-underline has-[>svg]:px-0"
-      onClick={logout}
+      onClick={handleLogout}
       disabled={loading}>
       <LogOutIcon />
       <span>Logout</span>
