@@ -13,6 +13,7 @@ export async function middleware(req: NextRequest) {
       "/api/auth/login",
       "/api/auth/signup",
       "/api/auth/google",
+      "/pricing",
     ].includes(pathname) || pathname.startsWith("/reset-password/");
 
   const access_token = req.cookies.get("_linklite_access")?.value;
@@ -50,7 +51,7 @@ export async function middleware(req: NextRequest) {
       return response;
     } catch (error) {
       console.log(error);
-      if (!isPublicPath) {
+      if (!isPublicPath && pathname !== "/pricing") {
         return NextResponse.redirect(new URL("/login", req.url));
       }
     }
@@ -61,12 +62,12 @@ export async function middleware(req: NextRequest) {
     access_token || response.cookies.get("_linklite_access")?.value;
 
   // ❌ If no access token and trying to access protected route → redirect
-  if (!hasAccessToken && !isPublicPath) {
+  if (!hasAccessToken && !isPublicPath && pathname !== "/pricing") {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
   // ✅ If access token and trying to access public route → redirect
-  if (hasAccessToken && isPublicPath) {
+  if (hasAccessToken && isPublicPath && pathname !== "/pricing") {
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
