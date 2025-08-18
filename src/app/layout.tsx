@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { _config } from "@/lib/_config";
 import "./globals.css";
+import Header from "@/components/ui/header";
 
 const interSans = Inter({
   variable: "--font-inter-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({
       <html lang="en">
         <body
           className={`${interSans.variable} ${dynaPuff.variable} antialiased`}>
+          <Header />
           {children}
           <Toaster richColors position="top-center" duration={3000} />
         </body>

@@ -19,10 +19,8 @@ const HeroTitle = () => {
             ease: "easeInOut",
           }}
           className={cn(
-            "mr-2 inline-block text-transparent from-neutral-100 to-neutral-100/50 bg-gradient-to-b bg-clip-text",
-            index === heading.length - 1
-              ? "from-s-secondary to-s-secondary/50"
-              : ""
+            "mr-2 inline-block text-p-primary",
+            index === heading.length - 1 ? "text-s-secondary" : ""
           )}>
           {word}
         </motion.span>

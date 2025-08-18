@@ -1,43 +1,42 @@
 import { NextRequest, NextResponse } from "next/server";
-import axiosInstance from "./axios/axios";
+import { _config } from "./lib/_config";
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  const isPublicPath =
-    [
-      "/",
-      "/login",
-      "/signup",
-      "/forgot-password",
-      "/api/auth/login",
-      "/api/auth/signup",
-      "/api/auth/google",
-      "/pricing",
-    ].includes(pathname) || pathname.startsWith("/reset-password/");
-
   const access_token = req.cookies.get("_linklite_access")?.value;
   const refresh_token = req.cookies.get("_linklite_refresh")?.value;
 
-  const response = NextResponse.next();
-
   if (!access_token && refresh_token) {
     try {
-      const res = await axiosInstance.post(
-        "/api/v1/users/refresh-access-token",
+      const res = await fetch(
+        `${_config.backend_url}/api/v1/users/refresh-access-token`,
         {
-          _linklite_refresh: refresh_token,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            _linklite_refresh: refresh_token,
+          }),
         }
       );
 
-      const { accessToken, refreshToken } = res.data;
+      const {
+        access_token: accessToken,
+        refresh_token: refreshToken,
+        access_expiry,
+        refresh_expiry,
+      } = await res.json();
+
+      const response = NextResponse.next();
 
       // Update access token
       response.cookies.set("_linklite_access", accessToken, {
         httpOnly: true,
         sameSite: "strict",
         secure: true,
-        expires: new Date(Date.now() + 1000 * 60 * 60),
+        expires: new Date(access_expiry),
       });
 
       // Update refresh token
@@ -45,33 +44,23 @@ export async function middleware(req: NextRequest) {
         httpOnly: true,
         sameSite: "strict",
         secure: true,
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+        expires: new Date(refresh_expiry),
       });
 
       return response;
     } catch (error) {
-      console.log(error);
-      if (!isPublicPath && pathname !== "/pricing") {
-        return NextResponse.redirect(new URL("/login", req.url));
+      if (error instanceof Error) {
+        console.log(error.message);
       }
+      return NextResponse.next();
     }
   }
 
-  // Check again if access token is missing after attempted refresh
-  const hasAccessToken =
-    access_token || response.cookies.get("_linklite_access")?.value;
-
-  // ❌ If no access token and trying to access protected route → redirect
-  if (!hasAccessToken && !isPublicPath && pathname !== "/pricing") {
-    return NextResponse.redirect(new URL("/login", req.url));
+  if (access_token && pathname === "/") {
+    return NextResponse.redirect(new URL(`${_config.app_url!}`, req.url));
   }
 
-  // ✅ If access token and trying to access public route → redirect
-  if (hasAccessToken && isPublicPath && pathname !== "/pricing") {
-    return NextResponse.redirect(new URL("/dashboard", req.url));
-  }
-
-  return response;
+  return NextResponse.next();
 }
 
 export const config = {
